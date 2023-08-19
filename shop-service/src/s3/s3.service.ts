@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
-import { InjectS3 } from '@nestjs-modules/s3';
+import { InjectS3 } from 'nestjs-s3';
 
 @Injectable()
 export class S3Service {
