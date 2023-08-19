@@ -2,6 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { ElasticService } from 'src/elastic/elastic.service';
 import { S3Service } from 'src/s3/s3.service';
 
+
+export interface User {
+  readonly id : number;
+  readonly user_name : string;
+  readonly password : string;
+  readonly mail_address : string;
+}
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -9,7 +17,13 @@ export class UsersService {
     private readonly awsS3Service: S3Service,
   ) {}
 
-  async getUser(id: string): Promise<any> {
+  async getUser(id: string): Promise<User> {
+    return {
+      id : 5,
+      user_name : 'Dandan',
+      password : 'millatiner',
+      mail_address : 'dmillatiner@gmail.com'
+    };
     // Implement Elasticsearch read operation
   }
 
@@ -18,7 +32,8 @@ export class UsersService {
     // Implement S3 read operation
   }
 
-  async createUser(user: any): Promise<any> {
+  async createUser(user: User): Promise<boolean> {
+    return false;
     // Implement Elasticsearch write operation
   }
 
