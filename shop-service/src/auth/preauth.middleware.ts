@@ -27,27 +27,25 @@ export class PreauthMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: (error?: any) => void) {
     const token = req.headers.authorization;
-    console.log('in');
-    //token != null && token != ''
-    // if (token != null && token != '') {
-    //   console.log('d');
-    //   const auth = this.defualtApp
-    //     .auth()
-    //     .verifyIdToken(token.replace('Bearer', ''))
-    //     .then(async (decodedToken) => {
-    //       const user = {
-    //         email: decodedToken.email,
-    //       };
-    //       req['user'] = user;
-    //       next();
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       this.accessDenied(req.url, res);
-    //     });
-    // } else {
-    next();
-    // }
+    if (token != null && token != '') {
+      console.log('d');
+      const auth = this.defualtApp
+        .auth()
+        .verifyIdToken(token.replace('Bearer', ''))
+        .then(async (decodedToken) => {
+          const user = {
+            email: decodedToken.email,
+          };
+          req['user'] = user;
+          next();
+        })
+        .catch((error) => {
+          console.error(error);
+          this.accessDenied(req.url, res);
+        });
+    } else {
+      next();
+    }
   }
   accessDenied(url: string, res: Response) {
     res.status(403).json({
